@@ -1,14 +1,21 @@
+using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(BoxCollider2D))]
 public class CoinSpawn : MonoBehaviour
 {
-    [SerializeField] private GameObject _spawnedCoin;
-    private readonly BoxCollider2D _boxCollider2D;
-    void Awake()
+    [SerializeField] private GameObject _spawnCoin;
+    void Start()
     {
-        _boxCollider2D.isTrigger = true;
+        StartCoroutine(SpawnCoin());
     }
 
-
+    private IEnumerator SpawnCoin ()
+    {
+        while (true)
+        {
+            float xCoordinate = Random.Range(6f, 24f);
+            GameObject spawnedCoin = Instantiate(_spawnCoin, new Vector3(xCoordinate, -3.5f, -0.5f), Quaternion.identity);
+            yield return new WaitForSeconds(3f);
+        }
+    }
 }
